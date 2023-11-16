@@ -1,0 +1,28 @@
+version: "3.9"
+services:
+  aml_project:
+    build:
+      context: .
+    platform: linux/amd64
+
+    # stdin_open: true # docker run -i
+    # tty: true # docker run -t
+    ports:
+      - 8999:8999
+      
+    volumes:
+      - ./:/home/aml_user
+
+    networks:
+      aml_network:
+        ipv4_address: 172.13.2.3
+
+
+
+networks:
+  aml_network:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.13.2.0/24
